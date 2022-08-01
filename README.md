@@ -281,7 +281,7 @@ To install the dashboard, go to "Menu" > "Import" > "Upload json file" and uploa
 
 <details>
 <summary>Click to expand</summary>
-![Grafana-01-screenshot](https://raw.githubusercontent.com/adavarski/REST-go-k8s-geolocation/.docs/grafana-01.png)
+![Grafana-01-screenshot](https://github.com/adavarski/REST-go-k8s-geolocation/blob/main/.docs/grafana-01.png)
 </details>
 
 ## TODO
