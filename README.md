@@ -117,11 +117,19 @@ $ go version
 go version go1.18.4 linux/amd64
 
 $ go run main.go 
-2022/08/01 12:05:54 Simple API Server(1.0.0) running on 0.0.0.0:32000
+{"level":"info","svc":"geolocation-go","time":"2022-08-01T18:54:40+03:00","message":"Starting server on address :8080 ..."}
+{"level":"info","remote_client":"127.0.0.1:39404","user_agent":"curl/7.58.0","req_id":"cbjves29bh8hacek8s60","method":"GET","url":"/rest/v1/46.238.32.247","status":200,"size":122,"duration":164.016702,"time":"2022-08-01T18:55:28+03:00"}
+{"level":"error","svc":"geolocation-go","req_id":"cbjves29bh8hacek8s60","time":"2022-08-01T18:55:28+03:00","message":"fail to cache in redis database: error: cannot save value in redis: dial tcp 127.0.0.1:6379: connect: connection refused"}
+
+
+$ curl -X GET http://localhost:8080/rest/v1/46.238.32.247
+{"ip":"46.238.32.247","country_code":"BG","country_name":"Bulgaria","city":"Sofia","latitude":42.7182,"longitude":23.2974}
 ```
 ## Docker deploy
 ```
 $ docker build -t davarski/geolocation-go .
+$ docker login
+$ docker push davarski/geolocation-go
 $ docker run -d -p 8080:8080 davarski/geolocation-go 
 $ curl -X GET http://localhost:8080/rest/v1/8.8.8.8
 {"ip":"8.8.8.8","country_code":"US","country_name":"United States","city":"Ashburn","latitude":39.03,"longitude":-77.5}
