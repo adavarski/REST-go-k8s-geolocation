@@ -236,14 +236,52 @@ helm install \
        --namespace monitoring
 
 # Access the Grafana web interface through http://localhost:8080/ (default credentials: admin/prom-operator)
-kubectl port-forward -n monitoring svc/prometheus-operator-grafana 80:3000
+
+$ kubectl get all -n monitoring
+NAME                                                          READY   STATUS    RESTARTS   AGE
+pod/alertmanager-prometheus-operator-kube-p-alertmanager-0    2/2     Running   0          3m2s
+pod/prometheus-operator-grafana-6cf9697844-6f5sl              3/3     Running   0          3m7s
+pod/prometheus-operator-kube-p-operator-99dbdfdbd-hn5h2       1/1     Running   0          3m7s
+pod/prometheus-operator-kube-state-metrics-84d5df9f46-d2nxv   1/1     Running   0          3m7s
+pod/prometheus-operator-prometheus-node-exporter-9d2bd        1/1     Running   0          3m7s
+pod/prometheus-operator-prometheus-node-exporter-n7sbn        1/1     Running   0          3m6s
+pod/prometheus-prometheus-operator-kube-p-prometheus-0        2/2     Running   0          3m2s
+
+NAME                                                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
+service/alertmanager-operated                          ClusterIP   None            <none>        9093/TCP,9094/TCP,9094/UDP   3m2s
+service/prometheus-operated                            ClusterIP   None            <none>        9090/TCP                     3m2s
+service/prometheus-operator-grafana                    ClusterIP   10.96.38.21     <none>        80/TCP                       3m7s
+service/prometheus-operator-kube-p-alertmanager        ClusterIP   10.96.85.231    <none>        9093/TCP                     3m7s
+service/prometheus-operator-kube-p-operator            ClusterIP   10.96.187.218   <none>        443/TCP                      3m7s
+service/prometheus-operator-kube-p-prometheus          ClusterIP   10.96.200.0     <none>        9090/TCP                     3m7s
+service/prometheus-operator-kube-state-metrics         ClusterIP   10.96.121.64    <none>        8080/TCP                     3m7s
+service/prometheus-operator-prometheus-node-exporter   ClusterIP   10.96.131.192   <none>        9100/TCP                     3m7s
+
+NAME                                                          DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+daemonset.apps/prometheus-operator-prometheus-node-exporter   2         2         2       2            2           <none>          3m7s
+
+NAME                                                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/prometheus-operator-grafana              1/1     1            1           3m7s
+deployment.apps/prometheus-operator-kube-p-operator      1/1     1            1           3m7s
+deployment.apps/prometheus-operator-kube-state-metrics   1/1     1            1           3m7s
+
+NAME                                                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/prometheus-operator-grafana-6cf9697844              1         1         1       3m7s
+replicaset.apps/prometheus-operator-kube-p-operator-99dbdfdbd       1         1         1       3m7s
+replicaset.apps/prometheus-operator-kube-state-metrics-84d5df9f46   1         1         1       3m7s
+
+NAME                                                                    READY   AGE
+statefulset.apps/alertmanager-prometheus-operator-kube-p-alertmanager   1/1     3m2s
+statefulset.apps/prometheus-prometheus-operator-kube-p-prometheus       1/1     3m2s
+
+$ kubectl port-forward -n monitoring svc/prometheus-operator-grafana 8081:80
 ```
 
-To install the dashboard, go to "Menu" > "Create" > "Import" > "Upload json file" and upload `deploy/grafana/dashboard.json`.
+To install the dashboard, go to "Menu" > "Import" > "Upload json file" and upload `deploy/grafana/dashboard.json`.
 
 <details>
 <summary>Click to expand</summary>
-![Grafana-01-screenshot](https://raw.githubusercontent.com//.docs/grafana-01.png)
+![Grafana-01-screenshot](https://raw.githubusercontent.com/adavarski/REST-go-k8s-geolocation/.docs/grafana-01.png)
 </details>
 
 ## TODO
