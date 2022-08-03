@@ -37,7 +37,7 @@ jobs:
       - name: Clone mock repository
         uses: actions/checkout@v3
         with:
-          repository: lescactus/geolocationmock-go
+          repository: adavarski/REST-go-k8s-geolocationmock
           ref: master
           path: mock
 
