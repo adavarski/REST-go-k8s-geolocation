@@ -1,4 +1,4 @@
-module github.com/lescactus/geolocation-go/.e2e/gotest
+module github.com/adavarski/REST-go-k8s-geolocation/.e2e/gotest
 
 go 1.16
 
